@@ -12,7 +12,7 @@ app.MapGet("/rainfall/id/{stationId}/readings", async (string stationId, int cou
 {
     if (count < 1 && count > 100)
     {
-        return Results.BadRequest();
+        return Results.BadRequest(new Error("Count is out of allowed range", null));
     }
 
     try
@@ -20,7 +20,7 @@ app.MapGet("/rainfall/id/{stationId}/readings", async (string stationId, int cou
         var apiResponse = await httpClient.GetAsync($"flood-monitoring/id/stations/{stationId}/readings?_sorted&_limit={count}");
         if (apiResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
         {
-            return Results.NotFound();
+            return Results.NotFound(new Error("Count is out of allowed range", null));
         }
 
         var responceModel = await apiResponse.Content.ReadFromJsonAsync<ReadingRainfallAPIModel>();
