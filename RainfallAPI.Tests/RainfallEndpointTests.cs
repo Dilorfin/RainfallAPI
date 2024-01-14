@@ -43,7 +43,7 @@ public class RainfallEndpointTests
     {
         // Arrange
         const string stationId = "";
-        var apiReturnModel = new ReadingRainfallAPIModel(new List<MeasureRainfallAPIModel>());
+        var apiReturnModel = new ReadingRainfallApiModel(new List<MeasureRainfallApiModel>());
         var httpClientFactory = CreateHttpClientFactory(JsonConvert.SerializeObject(apiReturnModel), HttpStatusCode.OK);
         var configuration = CreateDefaultConfiguration();
         var logger = CreateDefaultLogger();
@@ -63,7 +63,7 @@ public class RainfallEndpointTests
     {
         // Arrange
         const string stationId = "";
-        var apiReturnModel = new ReadingRainfallAPIModel(new List<MeasureRainfallAPIModel>
+        var apiReturnModel = new ReadingRainfallApiModel(new List<MeasureRainfallApiModel>
         {
             new(DateTime.UtcNow, "", decimal.Zero),
             new(DateTime.UtcNow, "", decimal.One),

@@ -2,7 +2,7 @@
 
 namespace RainfallAPI.Endpoints;
 
-public class RainfallEndpoint : IBaseEndpoint, IDisposable
+public class RainfallEndpoint : IBaseEndpoint
 {
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly ILogger<RainfallEndpoint> _logger;
@@ -26,11 +26,6 @@ public class RainfallEndpoint : IBaseEndpoint, IDisposable
             .Produces<Error>(StatusCodes.Status500InternalServerError);
     }
 
-    public void Dispose()
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task<IResult> GetRainfallReading(string stationId, int count = 10)
     {
         _logger.LogDebug($"Requested station: {stationId} with count: {count}");
@@ -43,7 +38,7 @@ public class RainfallEndpoint : IBaseEndpoint, IDisposable
 
         var apiResponse = await httpClient.GetAsync(_baseRainfallUrl + $"flood-monitoring/id/stations/{stationId}/readings?_sorted&_limit={count}");
 
-        var responseModel = await apiResponse.Content.ReadFromJsonAsync<ReadingRainfallAPIModel>();
+        var responseModel = await apiResponse.Content.ReadFromJsonAsync<ReadingRainfallApiModel>();
 
         if (!responseModel!.items.Any())
         {

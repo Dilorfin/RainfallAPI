@@ -43,7 +43,7 @@ public class ExceptionMiddleware
     {
         var error = new Error(exception.Message, new List<ErrorDetail>()
         {
-            new ErrorDetail("InnerException", exception.InnerException!.Message)
+            new("InnerException", exception.InnerException!.Message)
         });
 
         context.Response.StatusCode = StatusCodes.Status500InternalServerError;
