@@ -2,17 +2,12 @@
 
 namespace RainfallAPI.Services;
 
-public class RainfallService(IHttpClientFactory httpClientFactory, IConfiguration config)
-    : IRainfallService
+public class RainfallService(HttpClient httpClient) : IRainfallService
 {
-    private readonly Uri _baseRainfallUrl = new(config.GetValue<string>("Settings:RainfallAPI")!);
-    
     public async Task<ReadingRainfallApiModel?> GetStationsReading(string stationId, int count)
     {
-        using var httpClient = httpClientFactory.CreateClient();
-
-        var requestUri = new Uri(_baseRainfallUrl, $"flood-monitoring/id/stations/{stationId}/readings?_limit={count}");
-        var apiResponse = await httpClient.GetAsync(requestUri);
+        var endpoint = $"flood-monitoring/id/stations/{stationId}/readings?_limit={count}";
+        var apiResponse = await httpClient.GetAsync(endpoint);
 
         return await apiResponse.Content.ReadFromJsonAsync<ReadingRainfallApiModel>();
     }

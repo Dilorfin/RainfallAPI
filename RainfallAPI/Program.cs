@@ -1,15 +1,18 @@
 using Microsoft.OpenApi.Models;
 using MinimalApi.Endpoint.Extensions;
-using RainfallAPI.Endpoints;
 using RainfallAPI.Extensions;
 using RainfallAPI.Middleware;
 using RainfallAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddScoped<IRainfallService, RainfallService>();
+builder.Services.AddSingleton<IRainfallService, RainfallService>();
+builder.Services.AddHttpClient<IRainfallService, RainfallService>(client =>
+    {
+        client.Timeout = TimeSpan.Parse(builder.Configuration["Settings:Timeout"]!);
+        client.BaseAddress = new Uri(builder.Configuration["Settings:RainfallAPI"]!);
+    }).AddGeneralRetryPolicy();
+
 builder.Services.AddEndpoints();
-builder.Services.AddHttpClient<IBaseEndpoint, RainfallEndpoint>()
-    .AddGeneralRetryPolicy();
 builder.Services.AddLogging();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c => {
