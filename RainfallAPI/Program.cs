@@ -1,7 +1,7 @@
 using Microsoft.OpenApi.Models;
 using MinimalApi.Endpoint.Extensions;
 using RainfallAPI.Endpoints;
-using RainfallAPI.Extentions;
+using RainfallAPI.Extensions;
 using RainfallAPI.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);

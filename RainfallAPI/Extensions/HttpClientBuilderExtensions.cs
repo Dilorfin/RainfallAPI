@@ -1,9 +1,9 @@
 ﻿using Polly.Extensions.Http;
 using Polly;
 
-namespace RainfallAPI.Extentions;
+namespace RainfallAPI.Extensions;
 
-public static class HttpClientBuilderExtentions
+public static class HttpClientBuilderExtensions
 {
     public static IHttpClientBuilder AddGeneralRetryPolicy(this IHttpClientBuilder builder)
     {
