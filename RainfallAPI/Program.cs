@@ -3,8 +3,10 @@ using MinimalApi.Endpoint.Extensions;
 using RainfallAPI.Endpoints;
 using RainfallAPI.Extensions;
 using RainfallAPI.Middleware;
+using RainfallAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddScoped<IRainfallService, RainfallService>();
 builder.Services.AddEndpoints();
 builder.Services.AddHttpClient<IBaseEndpoint, RainfallEndpoint>()
     .AddGeneralRetryPolicy();
